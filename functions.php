@@ -57,9 +57,9 @@ function university_files() {
   if(strstr($_SERVER['SERVER_NAME'], 'fictional-university.local')) {
     wp_enqueue_script('main-university-js', 'http://localhost:3000/bundled.js', NULL, '1.0', true);
   } else {
-    wp_enqueue_script('our-vendors-js', get_theme_file_uri('/bundled-assets/vendors~scripts.3d61757c21f5490b56c4.js'), NULL, '1.0', true);
-    wp_enqueue_script('main-university-js', get_theme_file_uri('/bundled-assets/scripts.8f7f83912977ff1e419a.js'), NULL, '1.0', true);
-    wp_enqueue_style('our-main-style', get_theme_file_uri('/bundled-assets/styles.8f7f83912977ff1e419a.css'));
+    wp_enqueue_script('our-vendors-js', get_theme_file_uri('/bundled-assets/vendors~scripts.07cb7586e2052fd66bd1.js'), NULL, '1.0', true);
+    wp_enqueue_script('main-university-js', get_theme_file_uri('/bundled-assets/scripts.3beade1abf8d4ab7e55e.js'), NULL, '1.0', true);
+    wp_enqueue_style('our-main-style', get_theme_file_uri('/bundled-assets/styles.3beade1abf8d4ab7e55e.css'));
   }
   wp_localize_script('main-university-js', 'universityData', array(
     'root_url' => get_site_url(),
@@ -75,6 +75,7 @@ function university_features() {
   add_image_size('professorLandscape', 400, 260, true);
   add_image_size('professorPortrait', 480, 650, true);
   add_image_size('pageBanner', 1500, 350, true);
+  add_image_size('slideshowImage', 1900, 525, true);
 }
 add_action('after_setup_theme', 'university_features');
 
@@ -150,7 +151,7 @@ function noSubsAdminBar() {
 
   function ourLoginCSS() {
     wp_enqueue_style('custom-google-font', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
-    wp_enqueue_style('our-main-style', get_theme_file_uri('/bundled-assets/styles.8f7f83912977ff1e419a.css'));
+    wp_enqueue_style('our-main-style', get_theme_file_uri('/bundled-assets/styles.3beade1abf8d4ab7e55e.css'));
   }
 
   add_filter('login_headertitle', 'ourLoginTitle');
@@ -180,6 +181,12 @@ function noSubsAdminBar() {
     return $data;
 }
 
+add_filter('ai1wm_exclude_content_from_export', 'ignoreCertainFiles');
+
+function ignoreCertainFiles($exclude_filters) {
+  $exclude_filters[] = 'themes/fictional-university-theme/node_modules';
+  return $exclude_filters;
+}
 
 }
 ?>
